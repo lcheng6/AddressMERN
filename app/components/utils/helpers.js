@@ -20,6 +20,13 @@ var helpers = {
       return response.data.results[0].formatted;
     });
 
+  },
+
+  saveQuery: function(location, result) {
+    return axio.put('/api', {location: location, result:result})
+  },
+  getResults: function() {
+    return axios.get('/api');
   }
 
 };
