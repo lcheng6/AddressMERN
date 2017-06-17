@@ -6,6 +6,7 @@ var mongoose = require("mongoose");
 
 // Require Click schema
 var Click = require("./models/click");
+var LocationHistory = require("./models/locationhistory")
 
 // Create a new express app
 var app = express();
@@ -47,42 +48,42 @@ app.get("/", function(req, res) {
 app.get("/api", function(req, res) {
 
     // This GET request will search for the latest clickCount
-    Click.find({}).exec(function(err, doc) {
-
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.send(doc);
-        }
-    });
+    // Click.find({}).exec(function(err, doc) {
+    //
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    //     else {
+    //         res.send(doc);
+    //     }
+    // });
 });
 
 // This is the route we will send POST requests to save each click.
 // We will call this route the moment the "click" or "reset" button is pressed.
 app.post("/api", function(req, res) {
 
-    var clickID = req.body.clickID;
-    var clicks = parseInt(req.body.clicks);
-
-    // Note how this route utilizes the findOneAndUpdate function to update the clickCount
-    // { upsert: true } is an optional object we can pass into the findOneAndUpdate method
-    // If included, Mongoose will create a new document matching the description if one is not found
-    Click.findOneAndUpdate({
-        clickID: clickID
-    }, {
-        $set: {
-            clicks: clicks
-        }
-    }, { upsert: true }).exec(function(err) {
-
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.send("Updated Click Count!");
-        }
-    });
+    // var clickID = req.body.clickID;
+    // var clicks = parseInt(req.body.clicks);
+    //
+    // // Note how this route utilizes the findOneAndUpdate function to update the clickCount
+    // // { upsert: true } is an optional object we can pass into the findOneAndUpdate method
+    // // If included, Mongoose will create a new document matching the description if one is not found
+    // Click.findOneAndUpdate({
+    //     clickID: clickID
+    // }, {
+    //     $set: {
+    //         clicks: clicks
+    //     }
+    // }, { upsert: true }).exec(function(err) {
+    //
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    //     else {
+    //         res.send("Updated Click Count!");
+    //     }
+    // });
 });
 
 // -------------------------------------------------
