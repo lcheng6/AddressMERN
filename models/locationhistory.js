@@ -5,13 +5,13 @@ var Schema = mongoose.Schema;
 
 // Create a Schema for capturing clicks. We'll use clickID to update the same clickCounter
 var LocationHistorySchema = new Schema({
-    location_result: {
+    locationResult: {
         type: String
     },
-    location_query: {
+    locationQuery: {
         type:String
     },
-    date_queried: {
+    dateQueried: {
         type: Date
     }
 });

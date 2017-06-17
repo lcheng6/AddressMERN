@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 
 // Require Click schema
 var Click = require("./models/click");
-var LocationHistory = require("./models/locationhistory")
+var LocationHistory = require("./models/locationhistory");
 
 // Create a new express app
 var app = express();
@@ -57,6 +57,25 @@ app.get("/api", function(req, res) {
     //         res.send(doc);
     //     }
     // });
+    LocationHistory.find({}).exec(function(err, docs) {
+        if (err) {
+            console.log("Can't find data");
+            return res.send(500, { error: err });
+        }else {
+            var returnData = [];
+            console.log(docs);
+            for(let i = 0; i<docs.length; i++) {
+                let doc = docs[i];
+                returnData.push({
+                    location:doc.locationQuery,
+                    result: doc.locationResult,
+                    date: doc.dateQueried
+                })
+            }
+            console.log(returnData);
+            return res.send(200, returnData);
+        }
+    })
 });
 
 // This is the route we will send POST requests to save each click.
@@ -84,6 +103,33 @@ app.post("/api", function(req, res) {
     //         res.send("Updated Click Count!");
     //     }
     // });
+
+    var locationQuery = req.body.location;
+    var locationResult = req.body.result;
+
+    // LocationHistory.upsert(record).exec(function(err) {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    //     else {
+    //         res.send("Updated Location History");
+    //     }
+    // })
+    // LocationHistory.findOneAndUpdate({}, record, {upsert:false}, function (err, doc) {
+    //     if (err) return res.send(500, { error: err });
+    //     return res.send("Updated Location History");
+    // })
+    var tmp = new LocationHistory();
+    tmp.locationQuery = locationQuery;
+    tmp.locationResult = locationResult;
+    tmp.dateQueried = new Date();
+    tmp.save(function(err, doc) {
+        if(err) {
+            res.send(500, "Error saving location history");
+        }else {
+            res.send(200, doc);
+        }
+    });
 });
 
 // -------------------------------------------------
