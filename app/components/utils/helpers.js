@@ -23,9 +23,9 @@ var helpers = {
   },
 
   saveQuery: function(location, result) {
-    return axio.put('/api', {location: location, result:result})
+    return axios.post('/api', {location: location, result:result})
   },
-  getResults: function() {
+  getQueryHistory: function() {
     return axios.get('/api');
   }
 
