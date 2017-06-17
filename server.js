@@ -63,7 +63,6 @@ app.get("/api", function(req, res) {
             return res.send(500, { error: err });
         }else {
             var returnData = [];
-            console.log(docs);
             for(let i = 0; i<docs.length; i++) {
                 let doc = docs[i];
                 returnData.push({
@@ -73,7 +72,7 @@ app.get("/api", function(req, res) {
                 })
             }
             console.log(returnData);
-            return res.send(200, returnData);
+            return res.status(200).send(returnData);
         }
     })
 });
@@ -125,9 +124,9 @@ app.post("/api", function(req, res) {
     tmp.dateQueried = new Date();
     tmp.save(function(err, doc) {
         if(err) {
-            res.send(500, "Error saving location history");
+            res.status(500).send("Error saving location history");
         }else {
-            res.send(200, doc);
+            res.status(500).send(doc);
         }
     });
 });
