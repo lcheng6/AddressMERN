@@ -1,6 +1,6 @@
 // Include React
 var React = require("react");
-
+var History  = require("./history.js");
 // Creating the Results component
 var Results = React.createClass({
 
@@ -16,7 +16,9 @@ var Results = React.createClass({
           <p>{this.props.address}</p>
         </div>
       </div>
+      
     );
+       <History address = {this.props.address} />    
   }
 });
 
